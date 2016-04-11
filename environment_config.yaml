@@ -1,0 +1,12 @@
+attributes:
+  metadata:
+    restrictions:
+      - condition: cluster:net_provider != 'neutron' or networking_parameters:segmentation_type == 'vlan'
+        message: "Neutron with tunneling segmentation is only supported"
+        action: disable
+  vlan_bridge:
+    value: 'br-prv'
+    label: 'Bridge name'
+    description: 'The name of the the bridge used for VLANs in network-template'
+    weight: 25
+    type: "text"
