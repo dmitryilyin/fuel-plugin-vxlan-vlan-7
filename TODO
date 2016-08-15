@@ -1,0 +1,3 @@
+- Puppet lint file
+- Plugin hiera override for ml2_conf.ini
+- Describe non-trivial deploy cases as DVR enabled

@@ -1,4 +1,3 @@
-[root@fuel ~]# cat network_template_4.yaml
 adv_net_template:
   default:
     nic_mapping:
