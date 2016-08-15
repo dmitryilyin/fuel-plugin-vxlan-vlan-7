@@ -1,11 +1,8 @@
-# These tasks will be merged into deployment graph. Here you
-# can specify new tasks for any roles, even built-in ones.
-
 - id: neutron-ovs-provider-configure-ml2-controller
   type: puppet
   role: [primary-controller, controller]
   required_for: [post_deployment_end]
-  requires: [post_deployment_start]  
+  requires: [post_deployment_start]
   parameters:
     puppet_manifest: "configure-ml2-controller.pp"
     puppet_modules: "/etc/puppet/modules"
@@ -15,7 +12,7 @@
   type: puppet
   role: [compute]
   required_for: [post_deployment_end]
-  requires: [post_deployment_start]  
+  requires: [post_deployment_start]
   parameters:
     puppet_manifest: "configure-ml2-compute.pp"
     puppet_modules: "/etc/puppet/modules"
