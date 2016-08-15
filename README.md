@@ -1,31 +1,69 @@
 fuel-plugin-vxlan-vlan-7
-============
+========================
 
-Overwiev 
+Overview
+--------
 
-By default Fuel deployes only one type of neutron segmentation available for tenant networks per deployment(choice is done while creating environment). 
-Plugin can be used in VXLAN deployments to change neutron ml2 config file in order to configure VLAN ranges and bridge mappings.
+By default Fuel deploys only one type of neutron segmentation for tenant networks per environment (choice is done while creating environment).  
+Plugin can be used in VxLAN deployments to change neutron ml2 config file in order to configure VLAN ranges and bridge mappings.
 
 Requirements 
 ------------
-- MOS 7.0
+- MOS 7.0 or MOS 8.0
 
 Prerequisites
 ------------
-- Correctc Fuel network-template as Plugin does not create any intefaces by itself and relay on templates to do this 
+- Modify and update fuel network-template as plugin does not create any intefaces by itself and relay on template to do this
 
 Installing the plugin
 ---------------------
-- build plugin with fpb
-- instal plugin via Fuel CLI
+1. Download and build the plugin from
+    [GitHub: Fuel vxlan vlan plugin](https://github.com/Mirantis/fuel-plugin-vxlan-vlan-7)
+
+        # git clone https://github.com/Mirantis/fuel-plugin-vxlan-vlan-7.git
+        # fpb --build ./fuel-plugin-vxlan-vlan-7/
+        # ls -lash ./fuel-plugin-vxlan-vlan-7/fuel-plugin-vxlan-vlan-*.noarch.rpm
+
+2. Copy the plugin on already installed Fuel Master node; ssh can be used for
+    that. If you do not have the Fuel Master node yet, see
+    [Quick Start Guide](https://software.mirantis.com/quick-start/) :
+
+        # scp fuel-plugin-vxlan-vlan-*.noarch.rpm root@<Fuel_Master_ip>:~/
+
+3. Install the plugin:
+
+        # cd
+        # fuel plugins --install fuel-plugin-vxlan-vlan-*.noarch.rpm
+
+4. Check if the plugin was installed successfully:
+
+        # fuel plugins
+        id | name                     | version | package_version
+        ---|--------------------------|---------|----------------
+        .. | ..                       | ..      | ..
+        n  | fuel-plugin-vxlan-vlan-7 | 1.1     | 3.0.0
 
 Configuring the plugin
----------------------
-Plugin itself doesn't require configurtion. But before deploy environment correct network template has to be apploaded.
-For network-template example take a look at lnx-br-bond.yaml
+----------------------
+You are safe to go with defaults.  
+Before deployment please create/update network template and apply it.  
+For network-emplate example take a look at ./examples/lnx-br-bond.yaml
+
+Applying network template
+-------------------------
+Create new environment.  
+Before deploy switch to Fuel CLI and perform next steps:  
+
+        # fuel env
+
+To find out env id.  
+Ensure your network template has name *network_template_<env_id>.yaml*, otherwise you will fail to update your environment network settings.  
+Make changes to your network template to apply your interface names and roles.  
+Perform network settings update
+
+        # fuel network-template --env <env_id> --delete
+        # fuel network-template --env <env_id> --upload
 
 Verification
 ------------
-You should be able to create VLAN sementation network. Please use *providernet* as phiscal netwotk name
-
-
+You should be able to create VLAN segmentation network. Please use *providernet* as physical network name.
