@@ -47,7 +47,7 @@ Configuring the plugin
 ----------------------
 You are safe to go with defaults.  
 Before deployment please create/update network template and apply it.  
-For network-emplate example take a look at ./examples/lnx-br-bond.yaml
+For network-template examples take a look at ./examples/
 
 Applying network template
 -------------------------
@@ -57,12 +57,19 @@ Before deploy switch to Fuel CLI and perform next steps:
         # fuel env
 
 To find out env id.  
-Ensure your network template has name *network_template_<env_id>.yaml*, otherwise you will fail to update your environment network settings.  
+Ensure your network template has name *network_template_<env_id\>.yaml*, otherwise you will fail to update your environment network settings.  
 Make changes to your network template to apply your interface names and roles.  
 Perform network settings update
 
         # fuel network-template --env <env_id> --delete
         # fuel network-template --env <env_id> --upload
+
+Deploy with DVR
+---------------
+This plugin can be deployed with DVR option enabled.  
+To get DVR working, we've added br-ex and br-floating bridges on compute nodes so physnet1 is mapped to br-floating.  
+To get rid of unnecessary IP reservations for compute nodes, we've created new role *public-noip* that has no endpoints.  
+Take a look on examples/lnx-br-bond-dvr.yaml for details.
 
 Verification
 ------------
