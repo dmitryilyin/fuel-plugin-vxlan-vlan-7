@@ -7,7 +7,7 @@ if $plugin_metadata {
 
   $vlan_range  = pick($plugin_metadata['vlan_range'], '2:4094')
   $vlan_bridge = pick($plugin_metadata['vlan_bridge'], 'br-prv')
-  $physnet     = pick($plugin_metadata['physnet'], 'providernet')
+  $physnet     = pick($plugin_metadata['metadata']['physnet'], 'providernet')
 
   include neutron::params
 
